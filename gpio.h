@@ -190,17 +190,11 @@ unsigned char PIN_READ(unsigned char Portname,unsigned char Pinnumber){
 
 	switch(toupper(Portname)){
     case 'A': return READ_BIT(GPIO_PORTA_DATA_R,Pinnumber);
-		break;
     case 'B': return READ_BIT(GPIO_PORTB_DATA_R,Pinnumber);
-		break;
     case 'C': return READ_BIT(GPIO_PORTC_DATA_R,Pinnumber);
-		break;
     case 'D': return READ_BIT(GPIO_PORTD_DATA_R,Pinnumber);
-		break;
     case 'E': return READ_BIT(GPIO_PORTE_DATA_R,Pinnumber);
-		break;
     case 'F': return READ_BIT(GPIO_PORTF_DATA_R,Pinnumber);
-		break;
 
     }
 
@@ -210,17 +204,11 @@ unsigned char PORT_READ(unsigned char Portname){
 
 	switch(toupper(Portname)){
     case 'A': return GPIO_PORTA_DATA_R;
-		break;
     case 'B': return GPIO_PORTB_DATA_R;
-		break;
     case 'C': return GPIO_PORTC_DATA_R;
-		break;
     case 'D': return GPIO_PORTD_DATA_R;
-		break;
     case 'E': return GPIO_PORTE_DATA_R;
-		break;
     case 'F': return GPIO_PORTF_DATA_R;
-		break;
 
     }
 
