@@ -5,9 +5,8 @@
 #include <ctype.h>
 
 void Port_init(unsigned char Portname){
-	switch(Portname){
-		case ('A'):
-		case('a'):
+	switch(toupper(Portname)){
+		case 'A':
 			SET_BIT(SYSCTL_RCGCGPIO_R,0);
 while (READ_BIT(SYSCTL_PRGPIO_R,0) == 0){}
 			GPIO_PORTA_LOCK_R = 0x4C4F434B ;
@@ -18,8 +17,7 @@ while (READ_BIT(SYSCTL_PRGPIO_R,0) == 0){}
 
 	break;
 
-		case ('B'):
-		case('b'):
+		case 'B':
 			SET_BIT(SYSCTL_RCGCGPIO_R,1);
 while (READ_BIT(SYSCTL_PRGPIO_R,1) == 0){}
 			GPIO_PORTB_LOCK_R = 0x4C4F434B ;
@@ -29,8 +27,7 @@ while (READ_BIT(SYSCTL_PRGPIO_R,1) == 0){}
 			GPIO_PORTB_PCTL_R = 0;
 	break;
 
-		case ('C'):
-		case('c'):
+		case 'C':
 			SET_BIT(SYSCTL_RCGCGPIO_R,2);
 while (READ_BIT(SYSCTL_PRGPIO_R,2) == 0){}
 			GPIO_PORTC_LOCK_R = 0x4C4F434B ;
@@ -40,8 +37,7 @@ while (READ_BIT(SYSCTL_PRGPIO_R,2) == 0){}
 			GPIO_PORTC_PCTL_R = 0;
 	break;
 
-		case ('D'):
-		case('d'):
+		case 'D':
 			SET_BIT(SYSCTL_RCGCGPIO_R,3);
 while (READ_BIT(SYSCTL_PRGPIO_R,3) == 0){}
 			GPIO_PORTD_LOCK_R = 0x4C4F434B ;
@@ -51,8 +47,8 @@ while (READ_BIT(SYSCTL_PRGPIO_R,3) == 0){}
 			GPIO_PORTD_PCTL_R = 0
 	break;
 
-		case ('E'):
-		case('e'):
+		case 'E':
+
 			SET_BIT(SYSCTL_RCGCGPIO_R,4);
 while (READ_BIT(SYSCTL_PRGPIO_R,4) == 0){}
 			GPIO_PORTE_LOCK_R = 0x4C4F434B ;
@@ -61,8 +57,7 @@ while (READ_BIT(SYSCTL_PRGPIO_R,4) == 0){}
 			GPIO_PORTE_PCTL_R = 0;
 	break;
 
-		case ('F'):
-		case('f'):
+		case 'F':
 			SET_BIT(SYSCTL_RCGCGPIO_R,5);
 while (READ_BIT(SYSCTL_PRGPIO_R,5) == 0){}
 			GPIO_PORTF_LOCK_R = 0x4C4F434B ;
@@ -296,19 +291,19 @@ void WRITE_LOWERBITS(unsigned char Portname,unsigned char data){
                   break;
         case 'B': GPIO_PORTB_DATA_R &= 0xF0;
                   GPIO_PORTB_DATA_R |= data;
-                  break
+                  break;
         case 'C': GPIO_PORTC_DATA_R &= 0xF0;
                   GPIO_PORTC_DATA_R |= data;
-                  break
+                  break;
         case 'D': GPIO_PORTD_DATA_R &= 0xF0;
                   GPIO_PORTD_DATA_R |= data;
-                  break
+                  break;
         case 'E': GPIO_PORTE_DATA_R &= 0xF0;
                   GPIO_PORTE_DATA_R |= data;
-                  break
+                  break;
         case 'F': GPIO_PORTF_DATA_R &= 0xF0;
                   GPIO_PORTF_DATA_R |= data;
-                  break
+                  break;
 
     }
 
