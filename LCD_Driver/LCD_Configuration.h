@@ -20,7 +20,7 @@
 #define Entry_mode 0x06
 
 /*6- Defining the 8 bit mode */
-#define 8_bit_mode 0x38
+#define Eight_bit_mode 0x38
 
 
 
