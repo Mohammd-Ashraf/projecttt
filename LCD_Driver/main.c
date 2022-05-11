@@ -1,8 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "LCD_Configuration.h"
+
+
+Fares
+
+
 
 int main()
 {
-    printf("Hello world!\n");
-    return 0;
+
 }
