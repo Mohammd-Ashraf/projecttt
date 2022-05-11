@@ -1,4 +1,14 @@
-#include "gpio.c"
+#include "GPIO.h"
+#include "Button.h"
+
+void KEYPAD_INIT(unsigned char Portname){
+	Port_init(Portname);
+	PORT_DIR(Portname,0x0F);
+	PIN_PUR(Portname,4,1);
+	PIN_PUR(Portname,5,1);
+	PIN_PUR(Portname,6,1);
+	PIN_PUR(Portname,7,1);
+}
 
 
 unsigned char KEYPAD_READ(Portname){
