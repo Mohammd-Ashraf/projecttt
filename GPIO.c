@@ -314,7 +314,4 @@ void WRITE_LOWERBITS(unsigned char Portname,unsigned char data){
 
 }
 
-int main()
-{
 
-}
