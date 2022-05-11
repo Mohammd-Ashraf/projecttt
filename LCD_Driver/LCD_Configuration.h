@@ -1,12 +1,13 @@
 #ifndef LCD_CONFIGURATION_H_INCLUDED
 #define LCD_CONFIGURATION_H_INCLUDED
 
+
+
 /* 1- Defining the data port*/
 #define Data_Port 'B'
 
 /*2- Defining the control port (Enable - Read Write - Register select)*/
 #define Control_Port 'D'
-
 
 
 
@@ -30,19 +31,6 @@
 #define ReadWrite_pin 1
 
 #define RegisterSelect_pin 2
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

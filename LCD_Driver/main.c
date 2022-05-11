@@ -3,11 +3,6 @@
 
 
 
-
-
-
-
-
 /*Function to initialize the LCD */
 void LCD_Int(void){
 
@@ -78,27 +73,44 @@ void LCD_Send_character(char character){
 
 
 
+/*Function to send string */
+void LCD_Send_string(char *data){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-int main()
-{
-
+    while ((*data)!= '0'){
+        LCD_Send_character(*data);
+        data++ ;
+    }
 }
+
+
+
+
+
+/*Function to clear screen */
+void LCD_clearScreen(void){
+
+    LCD_Send_Command(Clear_Screen);
+    Delay_LCD(10);   /*Delay 10 ms */
+}
+
+
+
+
+/*Function to move the cursor */
+void cursor_move(char row , char column){
+    char position = 0;
+
+    if(row == 1){
+        position = (0x80) + (column-1);
+    }
+    else if(row == 2){
+            position = (0xC0) + (column-1);
+    }
+    else{   /*if row is not 1 or 2 then go to the first position in the first row */
+        position = 0x80;
+    }
+
+    LCD_Send_Command(position);
+    Delay_LCD(1);
+}
+
