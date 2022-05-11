@@ -1,0 +1,11 @@
+#ifndef LCD_CONFIGURATION_H_INCLUDED
+#define LCD_CONFIGURATION_H_INCLUDED
+
+/* 1- */
+#define
+
+/*2- */
+#define
+
+
+#endif // LCD_CONFIGURATION_H_INCLUDED
