@@ -224,6 +224,26 @@ unsigned char PORT_READ(unsigned char Portname){
 
 }
 
+void PIN_TOGGLE(unsigned char Portname,unsigned char Pinnumber){
+    switch(toupper(Portname)){
+        case 'A': TOGGLE_BIT(GPIO_PORTA_DATA_R,Pinnumber);
+                  break;
+        case 'B': TOGGLE_BIT(GPIO_PORTB_DATA_R,Pinnumber);
+                  break;
+        case 'C': TOGGLE_BIT(GPIO_PORTC_DATA_R,Pinnumber);
+                  break;
+        case 'D': TOGGLE_BIT(GPIO_PORTD_DATA_R,Pinnumber);
+                  break;
+        case 'E': TOGGLE_BIT(GPIO_PORTE_DATA_R,Pinnumber);
+                  break;
+        case 'F': TOGGLE_BIT(GPIO_PORTF_DATA_R,Pinnumber);
+                  break;
+    }
+
+
+
+}
+
 void PIN_PUR(unsigned char Portname,unsigned char Pinnumber,unsigned char activation){
     switch(toupper(Portname)){
     case 'A': if(activation == 1){
