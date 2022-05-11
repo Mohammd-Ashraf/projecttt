@@ -1,8 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "tm4c123gh6pm.h"
 #include "macros.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
+
 
 void Port_init(unsigned char Portname){
 	switch(toupper(Portname)){
@@ -12,9 +13,6 @@ while (READ_BIT(SYSCTL_PRGPIO_R,0) == 0){}
 			GPIO_PORTA_LOCK_R = 0x4C4F434B ;
 			GPIO_PORTA_CR_R |= 0xFF;
 			GPIO_PORTA_DEN_R |= 0xFF;
-			GPIO_PORTA_AFSEL_R = 0x00;
-			GPIO_PORTA_PCTL_R = 0;
-
 	break;
 
 		case 'B':
@@ -23,8 +21,6 @@ while (READ_BIT(SYSCTL_PRGPIO_R,1) == 0){}
 			GPIO_PORTB_LOCK_R = 0x4C4F434B ;
 			GPIO_PORTB_CR_R |= 0xFF;
 			GPIO_PORTB_DEN_R |= 0xFF;
-			GPIO_PORTB_AFSEL_R = 0x00;
-			GPIO_PORTB_PCTL_R = 0;
 	break;
 
 		case 'C':
@@ -33,8 +29,6 @@ while (READ_BIT(SYSCTL_PRGPIO_R,2) == 0){}
 			GPIO_PORTC_LOCK_R = 0x4C4F434B ;
 			GPIO_PORTC_CR_R |= 0xFF;
 			GPIO_PORTC_DEN_R |= 0xFF;
-			GPIO_PORTC_AFSEL_R = 0x00;
-			GPIO_PORTC_PCTL_R = 0;
 	break;
 
 		case 'D':
@@ -43,18 +37,14 @@ while (READ_BIT(SYSCTL_PRGPIO_R,3) == 0){}
 			GPIO_PORTD_LOCK_R = 0x4C4F434B ;
 			GPIO_PORTD_CR_R |= 0xFF;
 			GPIO_PORTD_DEN_R |= 0xFF;
-			GPIO_PORTD_AFSEL_R = 0x00;
-			GPIO_PORTD_PCTL_R = 0
 	break;
 
 		case 'E':
-
 			SET_BIT(SYSCTL_RCGCGPIO_R,4);
 while (READ_BIT(SYSCTL_PRGPIO_R,4) == 0){}
 			GPIO_PORTE_LOCK_R = 0x4C4F434B ;
 			GPIO_PORTE_CR_R |= 0xFF;
-			GPIO_PORTE_AFSEL_R = 0x00;
-			GPIO_PORTE_PCTL_R = 0;
+			GPIO_PORTE_DEN_R |= 0xFF;
 	break;
 
 		case 'F':
@@ -63,8 +53,6 @@ while (READ_BIT(SYSCTL_PRGPIO_R,5) == 0){}
 			GPIO_PORTF_LOCK_R = 0x4C4F434B ;
 			GPIO_PORTF_CR_R |= 0xFF;
 			GPIO_PORTF_DEN_R |= 0xFF;
-			GPIO_PORTF_AFSEL_R = 0x00;
-			GPIO_PORTF_PCTL_R = 0;
 	break;
 }
 }
@@ -72,43 +60,47 @@ while (READ_BIT(SYSCTL_PRGPIO_R,5) == 0){}
 
 void PIN_DIR(unsigned char Portname , unsigned char Pinnumber,unsigned char direction){
 
-switch(toupper(Portname){
-    case 'A': if(direction==1){
-       SET_BIT(GPIO_PORTA_DIR_R,Pinnumber);
-       }
-        else CLEAR_BIT(GPIO_PORTA_DIR_R,Pinnumber);
-        break;
-
-      case 'B': if(direction==1){
-       SET_BIT(GPIO_PORTB_DIR_R,Pinnumber);
-       }
-        else CLEAR_BIT(GPIO_PORTB_DIR_R,Pinnumber);
+	switch(toupper(Portname)){
+			case 'A':
+				if(direction==1)
+					SET_BIT(GPIO_PORTA_DIR_R,Pinnumber);
+        else
+					CLEAR_BIT(GPIO_PORTA_DIR_R,Pinnumber);
             break;
 
-          case 'C': if(direction==1){
-       SET_BIT(GPIO_PORTC_DIR_R,Pinnumber);
-       }
-        else CLEAR_BIT(GPIO_PORTC_DIR_R,Pinnumber);
+      case 'B': if(direction==1)
+					SET_BIT(GPIO_PORTB_DIR_R,Pinnumber);
+        else
+					CLEAR_BIT(GPIO_PORTB_DIR_R,Pinnumber);
             break;
 
-       case 'D': if(direction==1){
-       SET_BIT(GPIO_PORTD_DIR_R,Pinnumber);
-       }
-        else CLEAR_BIT(GPIO_PORTD_DIR_R,Pinnumber);
+       case 'C':
+				 if(direction==1)
+					SET_BIT(GPIO_PORTC_DIR_R,Pinnumber);
+        else
+					CLEAR_BIT(GPIO_PORTC_DIR_R,Pinnumber);
             break;
 
-        case 'E': if(direction==1){
-       SET_BIT(GPIO_PORTE_DIR_R,Pinnumber);
-       }
-        else CLEAR_BIT(GPIO_PORTE_DIR_R,Pinnumber);
+       case 'D':
+				 if(direction==1)
+					SET_BIT(GPIO_PORTD_DIR_R,Pinnumber);
+        else
+					CLEAR_BIT(GPIO_PORTD_DIR_R,Pinnumber);
             break;
 
-        case 'F': if(direction==1){
-       SET_BIT(GPIO_PORTF_DIR_R,Pinnumber);
-       }
-        else CLEAR_BIT(GPIO_PORTF_DIR_R,Pinnumber);
+        case 'E':
+					if(direction==1)
+					SET_BIT(GPIO_PORTE_DIR_R,Pinnumber);
+        else
+					CLEAR_BIT(GPIO_PORTE_DIR_R,Pinnumber);
             break;
 
+        case 'F':
+					if(direction==1)
+					SET_BIT(GPIO_PORTF_DIR_R,Pinnumber);
+        else
+					CLEAR_BIT(GPIO_PORTF_DIR_R,Pinnumber);
+            break;
 }
 
 }
@@ -176,7 +168,8 @@ switch(toupper(Portname)){
 
 
 void PORT_WRITE(unsigned char Portname,unsigned char data){
-    switch(toupper(Portname)){
+
+	switch(toupper(Portname)){
         case 'A': GPIO_PORTA_DATA_R = data;
                 break;
         case 'B': GPIO_PORTB_DATA_R = data;
@@ -194,7 +187,8 @@ void PORT_WRITE(unsigned char Portname,unsigned char data){
 }
 
 unsigned char PIN_READ(unsigned char Portname,unsigned char Pinnumber){
-    switch(toupper(Portname)){
+
+	switch(toupper(Portname)){
     case 'A': return READ_BIT(GPIO_PORTA_DATA_R,Pinnumber);
     case 'B': return READ_BIT(GPIO_PORTB_DATA_R,Pinnumber);
     case 'C': return READ_BIT(GPIO_PORTC_DATA_R,Pinnumber);
@@ -207,7 +201,8 @@ unsigned char PIN_READ(unsigned char Portname,unsigned char Pinnumber){
 }
 
 unsigned char PORT_READ(unsigned char Portname){
-    switch(toupper(Portname)){
+
+	switch(toupper(Portname)){
     case 'A': return GPIO_PORTA_DATA_R;
     case 'B': return GPIO_PORTB_DATA_R;
     case 'C': return GPIO_PORTC_DATA_R;
@@ -216,26 +211,6 @@ unsigned char PORT_READ(unsigned char Portname){
     case 'F': return GPIO_PORTF_DATA_R;
 
     }
-
-}
-
-void PIN_TOGGLE(unsigned char Portname,unsigned char Pinnumber){
-    switch(toupper(Portname)){
-        case 'A': TOGGLE_BIT(GPIO_PORTA_DATA_R,Pinnumber);
-                  break;
-        case 'B': TOGGLE_BIT(GPIO_PORTB_DATA_R,Pinnumber);
-                  break;
-        case 'C': TOGGLE_BIT(GPIO_PORTC_DATA_R,Pinnumber);
-                  break;
-        case 'D': TOGGLE_BIT(GPIO_PORTD_DATA_R,Pinnumber);
-                  break;
-        case 'E': TOGGLE_BIT(GPIO_PORTE_DATA_R,Pinnumber);
-                  break;
-        case 'F': TOGGLE_BIT(GPIO_PORTF_DATA_R,Pinnumber);
-                  break;
-    }
-
-
 
 }
 
@@ -328,5 +303,3 @@ void WRITE_LOWERBITS(unsigned char Portname,unsigned char data){
     }
 
 }
-
-
