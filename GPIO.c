@@ -310,19 +310,19 @@ void WRITE_LOWERBITS(unsigned char Portname,unsigned char data){   //write in th
                   break;
         case 'B': GPIO_PORTB_DATA_R &= 0xF0;
                   GPIO_PORTB_DATA_R |= data;
-                  break
+                  break;
         case 'C': GPIO_PORTC_DATA_R &= 0xF0;
                   GPIO_PORTC_DATA_R |= data;
-                  break
+                  break;
         case 'D': GPIO_PORTD_DATA_R &= 0xF0;
                   GPIO_PORTD_DATA_R |= data;
-                  break
+                  break;
         case 'E': GPIO_PORTE_DATA_R &= 0xF0;
                   GPIO_PORTE_DATA_R |= data;
-                  break
+                  break;
         case 'F': GPIO_PORTF_DATA_R &= 0xF0;
                   GPIO_PORTF_DATA_R |= data;
-                  break
+                  break;
 
     }
 
