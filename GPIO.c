@@ -3,6 +3,8 @@
 #include "tm4c123gh6pm.h"
 #include "macros.h"
 #include <ctype.h>
+#include <stdint.h>
+
 
 void Port_init(unsigned char Portname){  //initialize the port
 	switch(toupper(Portname)){
