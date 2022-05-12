@@ -11,7 +11,7 @@ void KEYPAD_INIT(unsigned char Portname){
 }
 
 
-unsigned char KEYPAD_READ(Portname){
+unsigned char KEYPAD_READ(unsigned char Portname){
 	
 	unsigned char arr[4][4] = {
 				{'1', '2', '3', 'A'},

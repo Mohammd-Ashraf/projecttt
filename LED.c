@@ -1,4 +1,4 @@
-#include "gpio.h"
+#include "GPIO.h"
 
 
 void LED_INIT (unsigned char Portname ,unsigned char Pinnumber){
@@ -20,6 +20,6 @@ void LED_OFF (unsigned char Portname,unsigned char Pinnumber){
 
 void LED_TOG (unsigned char Portname,unsigned char Pinnumber){
 	
-	PIN_TOGGLE(Portname,Pinnumber,0);
+	PIN_TOGGLE(Portname,Pinnumber);
 	
 }
