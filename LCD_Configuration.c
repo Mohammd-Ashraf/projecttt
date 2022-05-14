@@ -3,6 +3,31 @@
 
 
 
+
+
+/*Function to make pulse for 2 ms*/
+static void Pulse_func(void){         /*static because we will use it only in this file */
+
+    PIN_WRITE(Control_Port , Enable_pin , 1 );
+    genericdelay(2);
+    PIN_WRITE(Control_Port , Enable_pin , 0 );
+
+}
+
+/*Function to send command*/
+void LCD_Send_Command(char command){
+
+    PORT_WRITE( Data_Port , command); /*write the command in data port*/
+
+    PIN_WRITE( Control_Port , RegisterSelect_pin , 0); /*To know this is a command not character */
+
+    Pulse_func();
+    genericdelay(1);
+
+
+}
+
+
 /*Function to initialize the LCD */
 void LCD_Int(void){
 
@@ -15,45 +40,20 @@ void LCD_Int(void){
     PIN_WRITE(Control_Port , ReadWrite_pin , 0 );  /*we will use the ReadWrite pin to write */
 
     LCD_Send_Command(Eight_bit_mode);  /*Send the 8-bit data directly in one stroke*/
-    Delay_LCD(1);
+    genericdelay(1);
 
     LCD_Send_Command(Display_ON); /* Display ON, cursor OFF*/
-    Delay_LCD(1);
+    genericdelay(1);
 
     LCD_Send_Command(Clear_Screen); /* Clear the display of the LCD */
-    Delay_LCD(10);
+    genericdelay(10);
 
     LCD_Send_Command(Entry_mode); /* Write the char and move the cursor */
-    Delay_LCD(1);
+    genericdelay(1);
 
 
 }
 
-
-
-
-/*Function to make pulse for 2 ms*/
-static void Pulse_func(void){         /*static because we will use it only in this file */
-
-    PIN_WRITE(Control_Port , Enable_pin , 1 );
-    Delay_LCD(2);
-    PIN_WRITE(Control_Port , Enable_pin , 0 );
-
-}
-
-
-/*Function to send command*/
-void LCD_Send_Command(char command){
-
-    PORT_WRITE( Data_Port , command); /*write the command in data port*/
-
-    PIN_WRITE( Control_Port , RegisterSelect_pin , 0); /*To know this is a command not character */
-
-    Pulse_func();
-    Delay_LCD(1);
-
-
-}
 
 
 
@@ -65,7 +65,7 @@ void LCD_Send_character(char character){
     PIN_WRITE( Control_Port , RegisterSelect_pin , 1); /*To know this is a character not command */
 
     Pulse_func();
-    Delay_LCD(1);
+    genericdelay(1);
 
 
 }
@@ -90,7 +90,7 @@ void LCD_Send_string(char *data){
 void LCD_clearScreen(void){
 
     LCD_Send_Command(Clear_Screen);
-    Delay_LCD(10);   /*Delay 10 ms */
+    genericdelay(10);   /*Delay 10 ms */
 }
 
 
@@ -111,6 +111,6 @@ void cursor_move(char row , char column){
     }
 
     LCD_Send_Command(position);
-    Delay_LCD(1);
+    genericdelay(1);
 }
 
