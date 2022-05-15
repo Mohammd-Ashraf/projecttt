@@ -3,8 +3,8 @@
 
 //.h file for keypad
 
-void KEYPAD_INIT(unsigned char Portname);
+void KEYPAD_INIT(void);
 
-unsigned char KEYPAD_READ(unsigned char Portname);
+unsigned char KEYPAD_READ(void);
 
 #endif
