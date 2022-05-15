@@ -23,6 +23,7 @@ PIN_DIR ('D',0,1); //RS  sending commands or data to LCD
 PIN_DIR ('D',1,1); //RW
 PIN_DIR ('D',2,1); //E
 PORT_DIR('B',0xFF);
+PIN_WRITE('D',,2,1);
 LCD_CMD(Function_8_bit);
 LCD_CMD(clear_display);
 LCD_CMD(cursorBlink);
