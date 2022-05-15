@@ -1,5 +1,5 @@
-#ifndef LCD_CONFIGURATION_H_INCLUDED
-#define LCD_CONFIGURATION_H_INCLUDED
+#ifndef LCD_CONFIGURATION_H_
+#define LCD_CONFIGURATION_H_
 
 
 
@@ -15,7 +15,7 @@
 #define Clear_Screen 0x01
 
 /*4- Display ON, cursor OFF*/
-#define Display_ON 0x0C
+#define Display_ON 0x0E
 
 /*5- Defining the Entry mode */
 #define Entry_mode 0x06
@@ -33,12 +33,6 @@
 #define RegisterSelect_pin 2
 
 
-void LCD_Int(void);
-static void Pulse_func(void);
-void LCD_Send_Command(char command);
-void LCD_Send_character(char character);
-void LCD_Send_string(char *data);
-void LCD_clearScreen(void);
-void cursor_move(char row , char column);
 
-#endif // LCD_CONFIGURATION_H_INCLUDED
+
+#endif // LCD_CONFIGURATION_H_
