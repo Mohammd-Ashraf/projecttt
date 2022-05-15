@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "tm4c123gh6pm.h"
-#include "macros.h"
 #include <ctype.h>
 #include <stdint.h>
+#include "tm4c123gh6pm.h"
+#include "macros.h"
+
 
 
 void Port_init(unsigned char Portname){  //initialize the port
@@ -46,7 +47,7 @@ while (READ_BIT(SYSCTL_PRGPIO_R,3) == 0){}
 			GPIO_PORTD_CR_R |= 0xFF;
 			GPIO_PORTD_DEN_R |= 0xFF;
 			GPIO_PORTD_AFSEL_R = 0x00;
-			GPIO_PORTD_PCTL_R = 0
+			GPIO_PORTD_PCTL_R = 0;
 	break;
 
 		case 'E':
@@ -203,8 +204,8 @@ unsigned char PIN_READ(unsigned char Portname,unsigned char Pinnumber){ //read f
     case 'E': return READ_BIT(GPIO_PORTE_DATA_R,Pinnumber);
     case 'F': return READ_BIT(GPIO_PORTF_DATA_R,Pinnumber);
 
+			default: return READ_BIT(GPIO_PORTF_DATA_R,Pinnumber);
     }
-
 }
 
 unsigned char PORT_READ(unsigned char Portname){  //read from the whole port(read character)
@@ -215,6 +216,8 @@ unsigned char PORT_READ(unsigned char Portname){  //read from the whole port(rea
     case 'D': return GPIO_PORTD_DATA_R;
     case 'E': return GPIO_PORTE_DATA_R;
     case 'F': return GPIO_PORTF_DATA_R;
+
+			default: return GPIO_PORTF_DATA_R;
 
     }
 
