@@ -282,15 +282,15 @@ void PIN_PDN(unsigned char Portname,unsigned char Pinnumber){
     switch(toupper(Portname)){
          case 'A': SET_BIT(GPIO_PORTA_PDR_R,Pinnumber);
                   break;
-        case 'B': TOGGLE_BIT(GPIO_PORTB_PDR_R,Pinnumber);
+        case 'B': SET_BIT(GPIO_PORTB_PDR_R,Pinnumber);
                   break;
-        case 'C': TOGGLE_BIT(GPIO_PORTC_PDR_R,Pinnumber);
+        case 'C': SET_BIT(GPIO_PORTC_PDR_R,Pinnumber);
                   break;
-        case 'D': TOGGLE_BIT(GPIO_PORTD_PDR_R,Pinnumber);
+        case 'D': SET_BIT(GPIO_PORTD_PDR_R,Pinnumber);
                   break;
-        case 'E': TOGGLE_BIT(GPIO_PORTE_PDR_R,Pinnumber);
+        case 'E': SET_BIT(GPIO_PORTE_PDR_R,Pinnumber);
                   break;
-        case 'F': TOGGLE_BIT(GPIO_PORTF_PDR_R,Pinnumber);
+        case 'F': SET_BIT(GPIO_PORTF_PDR_R,Pinnumber);
                   break;
 
     }
