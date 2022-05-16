@@ -26,11 +26,11 @@
 
 
 /*7- Defining the control pins */
-#define Enable_pin 0
+#define Enable_pin 3
 
-#define ReadWrite_pin 1
+#define ReadWrite_pin 2
 
-#define RegisterSelect_pin 2
+#define RegisterSelect_pin 1
 
 
 
