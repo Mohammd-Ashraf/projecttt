@@ -1,45 +1,46 @@
 #include "GPIO.h"
-#include "Button.h"
-#define 	KProw   'E'
-#define   KPcol   'A'
-
-void KEYPAD_INIT(void){
-	PORT_DIR(KProw,0xFF);
-	PORT_DIR(KPcol,0x00);
-	PIN_PUR(KPcol,4,1);
-	PIN_PUR(KPcol,5,1);
-	PIN_PUR(KPcol,6,1);
-	PIN_PUR(KPcol,7,1);
-}
+#include "TIMER.h"
+#include "tm4c123gh6pm.h"
 
 
-unsigned char KEYPAD_READ(void){
-
-	unsigned char arr[4][4] = {
+unsigned char arr[4][4] = {
 				{'1', '2', '3', 'A'},
 				{'4', '5', '6', 'B'},
 				{'7', '8', '9', 'C'},
 				{'*', '0', '#', 'D'}
 														};
 
-while(1){
-
-char row,col,x;
-char returnvalue=0xFF;
-	for(row=0;row<4;row++){
-	WRITE_LOWERBITS(KProw,0xFF);
-	PIN_WRITE(KProw,row,0);
-	for(col=0;col<=3;col++){
-		x = PIN_READ(KPcol, col+4);
-		if(x==0){
-			returnvalue=arr[row][col];
-			return returnvalue;
-	  }
-
-
-    }
-    if(x==0) break;
-	}
-
+														
+ void KEYPAD_INIT(void){
+	Port_init('A');
+  Port_init('D');
+  PORT_DIR('D',0x00);
+  PORT_DIR('A',0xF0);
+	GPIO_PORTD_PDR_R |= 0x0F;
+	 GPIO_PORTD_DATA_R &= 0x0F;
+	 GPIO_PORTA_DATA_R &=0XF0;
 }
+
+
+														
+unsigned char KEYPAD_READ(void){
+	
+	
+	int i,j;
+  while(1)
+  {
+    for(i = 0; i < 4; i++)    //Scan columns loop
+    {
+      PORT_WRITE('A',(1U << (i+4)));
+			genericdelay(2,1);
+       for( j = 0; j < 4; j++)  //Scan rows
+      {
+        if((PORT_READ('D') & 0x0F) & (1U << (j))){
+          GPIO_PORTD_DATA_R &= (~0X0F);
+          GPIO_PORTA_DATA_R &= (~0XF0);
+					return arr[j][i];}
+      }
+    }
+  }
+	return 0xFF;
 }
