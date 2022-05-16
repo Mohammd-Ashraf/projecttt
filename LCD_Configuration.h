@@ -7,7 +7,7 @@
 #define Data_Port 'B'
 
 /*2- Defining the control port (Enable - Read Write - Register select)*/
-#define Control_Port 'D'
+#define Control_Port 'E'
 
 
 
