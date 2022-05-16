@@ -14,13 +14,16 @@ void KEYPAD_INIT(void){
 
 
 unsigned char KEYPAD_READ(void){
-	
+
 	unsigned char arr[4][4] = {
 				{'1', '2', '3', 'A'},
 				{'4', '5', '6', 'B'},
 				{'7', '8', '9', 'C'},
 				{'*', '0', '#', 'D'}
 														};
+
+while(1){
+
 char row,col,x;
 char returnvalue=0xFF;
 	for(row=0;row<4;row++){
@@ -32,10 +35,10 @@ char returnvalue=0xFF;
 			returnvalue=arr[row][col];
 		break;
 	  }
-		if(x==0) {
-    break;}
+	  break;
     }
 	}
-			return returnvalue;			
+			return returnvalue;
 
+}
 }
