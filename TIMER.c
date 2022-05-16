@@ -15,7 +15,7 @@ void wait1ms(void){
 }
 
 
-void wait1us(){
+void wait1us(void){
 
         NVIC_ST_RELOAD_R = 0x10-1;
 		NVIC_ST_CURRENT_R = 0;
