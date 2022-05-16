@@ -38,12 +38,7 @@ void LCD_Send_Command(char command){
 
 /*Function to initialize the LCD */
 void LCD_Int(void){
-
-    PIN_WRITE(Control_Port , Enable_pin , 1 );
-    //GPIO_PORTE_DATA_R |= 0x08;
-    genericdelay(50,0);
-
-    PORT_DIR(Data_Port,0xFF);  /*Make all Data port as output */
+        PORT_DIR(Data_Port,0xFF);  /*Make all Data port as output */
     //GPIO_PORTB_DIR_R = 0xFF;
 
 
@@ -51,6 +46,12 @@ void LCD_Int(void){
     PIN_DIR(Control_Port  , ReadWrite_pin      ,1);
     PIN_DIR(Control_Port  , RegisterSelect_pin ,1);
     //GPIO_PORTE_DIR_R |= 0x0E;
+
+    PIN_WRITE(Control_Port , Enable_pin , 1 );
+    //GPIO_PORTE_DATA_R |= 0x08;
+    genericdelay(50,0);
+
+
 
     PIN_WRITE(Control_Port , ReadWrite_pin , 0 );  /*we will use the ReadWrite pin to write */
     //GPIO_PORTE_DIR_R &= ~0x04;
