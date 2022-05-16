@@ -33,8 +33,9 @@ char returnvalue=0xFF;
 		x = PIN_READ(KPcol, col+4);
 		if(x==0){
 			returnvalue=arr[row][col];
+			return returnvalue;
 	  }
-	  		return returnvalue;
+
 
     }
     if(x==0) break;
