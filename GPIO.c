@@ -277,6 +277,28 @@ void PIN_PUR(unsigned char Portname,unsigned char Pinnumber,unsigned char activa
     }
 
 }
+
+void PIN_PDN(unsigned char Portname,unsigned char Pinnumber){
+    switch(toupper(Portname)){
+         case 'A': SET_BIT(GPIO_PORTA_PDR_R,Pinnumber);
+                  break;
+        case 'B': TOGGLE_BIT(GPIO_PORTB_PDR_R,Pinnumber);
+                  break;
+        case 'C': TOGGLE_BIT(GPIO_PORTC_PDR_R,Pinnumber);
+                  break;
+        case 'D': TOGGLE_BIT(GPIO_PORTD_PDR_R,Pinnumber);
+                  break;
+        case 'E': TOGGLE_BIT(GPIO_PORTE_PDR_R,Pinnumber);
+                  break;
+        case 'F': TOGGLE_BIT(GPIO_PORTF_PDR_R,Pinnumber);
+                  break;
+
+    }
+
+
+
+}
+
 void WRITE_UPPERBITs(unsigned char Portname,unsigned char data){ //write in the 4 upperbits only of the data register
     data <<= 4;
     switch(toupper(Portname)){
