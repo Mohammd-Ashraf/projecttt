@@ -3,7 +3,6 @@
 
 void SysTick_Wait(void);
 void wait1ms(void);
-void wait1us();
-void genericdelay(unsigned long time);
-
+void wait1us(void);
+void genericdelay(unsigned long time,unsigned char unit);
 #endif
