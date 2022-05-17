@@ -48,7 +48,7 @@ void LCD_Int(void){
     LCD_Send_Command(Eight_bit_mode);  /*Send the 8-bit data directly in one stroke*/
     genericdelay(1,0);
 
-    LCD_Send_Command(Display_ON); /* Display ON, cursor OFF*/
+    LCD_Send_Command(Display_ON_Cursor_ON); /* Display ON, cursor ON*/
     genericdelay(1,0);
 
     LCD_Send_Command(Clear_Screen); /* Clear the display of the LCD */
