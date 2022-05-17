@@ -11,21 +11,29 @@
 
 
 
+
 /* 3- Clear display screen*/
 #define Clear_Screen 0x01
 
-/*4- Display ON, cursor OFF*/
-#define Display_ON 0x0E
+/*4- Display ON, cursor ON*/
+#define Display_Cursor_ON 0x0E
 
-/*5- Defining the Entry mode */
+
+/*5- Display ON, cursor OFF*/
+#define Display_Cursor_OFF 0x0C
+
+
+/*6- Defining the Entry mode */
 #define Entry_mode 0x06
 
-/*6- Defining the 8 bit mode */
+/*7- Defining the 8 bit mode */
 #define Eight_bit_mode 0x38
 
 
 
-/*7- Defining the control pins */
+
+
+/*8- Defining the control pins */
 #define Enable_pin 3
 
 #define ReadWrite_pin 2
