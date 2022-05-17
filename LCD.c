@@ -4,17 +4,6 @@
 
 
 
-
-/*Function to make pulse for 2 ms*/
- /*static because we will use it only in this file */
-
-/*static void Pulse_func(void){
-    PIN_WRITE(Control_Port , Enable_pin , 1 );
-    genericdelay(2);
-    PIN_WRITE(Control_Port , Enable_pin , 0 );
-
-} */
-
 /*Function to send command*/
 void LCD_Send_Command(char command){
     PIN_WRITE(Control_Port , Enable_pin , 1 );
@@ -159,5 +148,24 @@ PIN_WRITE(Control_Port , Enable_pin , 1 );
 
     PIN_WRITE(Control_Port , Enable_pin , 0);
     //GPIO_PORTD_DATA_R &= ~0x08;
+
+
+
+
+
+/* probably we will not use it*/
+/*Function to make pulse for 2 ms*/
+ /*static because we will use it only in this file */
+
+/*static void Pulse_func(void){
+    PIN_WRITE(Control_Port , Enable_pin , 1 );
+    genericdelay(2);
+    PIN_WRITE(Control_Port , Enable_pin , 0 );
+
+} */
+
+
+
+
 }
 
