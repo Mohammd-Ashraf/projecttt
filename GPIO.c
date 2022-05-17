@@ -16,6 +16,7 @@ void Port_init(unsigned char Portname){  //initialize the port
 			GPIO_PORTA_CR_R |= 0xFF;
 			GPIO_PORTA_DEN_R |= 0xFF;
 			GPIO_PORTA_AFSEL_R = 0x00;
+			GPIO_PORTA_AMSEL_R = 0x00;
 			GPIO_PORTA_PCTL_R = 0;
 
 	break;
@@ -27,6 +28,8 @@ void Port_init(unsigned char Portname){  //initialize the port
 			GPIO_PORTB_CR_R |= 0xFF;
 			GPIO_PORTB_DEN_R |= 0xFF;
 			GPIO_PORTB_AFSEL_R = 0x00;
+            GPIO_PORTB_AMSEL_R = 0x00;
+
 			GPIO_PORTB_PCTL_R = 0;
 	break;
 
@@ -37,6 +40,7 @@ void Port_init(unsigned char Portname){  //initialize the port
 			GPIO_PORTC_CR_R |= 0xFF;
 			GPIO_PORTC_DEN_R |= 0xFF;
 			GPIO_PORTC_AFSEL_R = 0x00;
+			GPIO_PORTC_AMSEL_R = 0x00;
 			GPIO_PORTC_PCTL_R = 0;
 	break;
 
@@ -47,6 +51,7 @@ void Port_init(unsigned char Portname){  //initialize the port
 			GPIO_PORTD_CR_R |= 0xFF;
 			GPIO_PORTD_DEN_R |= 0xFF;
 			GPIO_PORTD_AFSEL_R = 0x00;
+			GPIO_PORTD_AMSEL_R = 0x00;
 			GPIO_PORTD_PCTL_R = 0;
 	break;
 
@@ -66,6 +71,7 @@ void Port_init(unsigned char Portname){  //initialize the port
 			GPIO_PORTF_CR_R |= 0xFF;
 			GPIO_PORTF_DEN_R |= 0xFF;
 			GPIO_PORTF_AFSEL_R = 0x00;
+			GPIO_PORTF_AMSEL_R = 0x00;
 			GPIO_PORTF_PCTL_R = 0;
 	break;
 }
