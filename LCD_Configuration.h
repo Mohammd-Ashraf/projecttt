@@ -16,11 +16,11 @@
 #define Clear_Screen 0x01
 
 /*4- Display ON, cursor ON*/
-#define Display_Cursor_ON 0x0E
+#define Display_ON_Cursor_ON 0x0E
 
 
 /*5- Display ON, cursor OFF*/
-#define Display_Cursor_OFF 0x0C
+#define Display_ON_Cursor_OFF 0x0C
 
 
 /*6- Defining the Entry mode */
