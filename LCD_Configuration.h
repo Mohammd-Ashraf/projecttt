@@ -22,23 +22,25 @@
 /*5- Display ON, cursor OFF*/
 #define Display_ON_Cursor_OFF 0x0C
 
+/*6- Display ON, Blinking*/
+#define Display_ON_Cursor_blink 0x0F
 
-/*6- Defining the Entry mode */
+/*7- Defining the Entry mode */
 #define Entry_mode 0x06
 
-/*7- Defining the 8 bit mode */
+/*8- Defining the 8 bit mode */
 #define Eight_bit_mode 0x38
 
+/*9- Return Home */
+#define Return_Home 0x02
 
 
+/*10- Defining the control pins */
+#define Enable_pin 2
 
+#define ReadWrite_pin 1
 
-/*8- Defining the control pins */
-#define Enable_pin 3
-
-#define ReadWrite_pin 2
-
-#define RegisterSelect_pin 1
+#define RegisterSelect_pin 0
 
 
 

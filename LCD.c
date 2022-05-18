@@ -14,6 +14,7 @@ void LCD_Send_Command(char command){
     //GPIO_PORTE_DATA_R |= 0x08;
 
 
+
     genericdelay(1,0);
     PORT_WRITE( Control_Port , 0x00);
 

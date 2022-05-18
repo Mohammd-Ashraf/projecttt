@@ -2,7 +2,7 @@
 #define LCD_H_
 
 void LCD_Int(void);
-static void Pulse_func(void);
+//static void Pulse_func(void);
 void LCD_Send_Command(char command);
 void LCD_Send_character(char character);
 void LCD_Send_string(char *data);
