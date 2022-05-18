@@ -61,10 +61,6 @@ switch(keypadinput){
             LED_ON('F',2);
             LED_ON('F',3);
 
-            if((GPIO_PORTF_DATA_R &0x10 == 0) ||(GPIO_PORTE_DATA_R &0x20 == 1 )){
-
-
-            }
 
             LCD_clearScreen();
             cursor_move(1,1);
