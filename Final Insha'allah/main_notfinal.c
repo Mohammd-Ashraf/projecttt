@@ -243,3 +243,155 @@ unsigned char KEYPAD_READ(void){
   }
 	return 0xFF;
 }
+void counter(float time,unsigned char identifier){
+	int Minutes=0,Seconds1=0,Seconds2=0;
+	float Seconds;
+	Minutes =(int) time;
+	Seconds = time - Minutes;
+	if(identifier == 'A'){
+Seconds1 = (int)(Seconds*10);
+Seconds2 =(int) (Seconds*100 -Seconds1 *10);
+	}
+	else if(identifier == 'B' ){
+		Seconds = Seconds * 0.6;
+	Seconds1 = (int)(Seconds*10) ;
+Seconds2 =(int) (Seconds*100 -Seconds1 *10);
+
+	}else if(identifier == 'C'){
+				Seconds = Seconds * 0.6;
+	Seconds1 = (int)(Seconds*10) ;
+Seconds2 =(int) (Seconds*100 -Seconds1 *10);
+	}
+
+
+while(1){
+
+LCD4bits_Cmd(0x01);
+//            if (!(GPIO_PORTF_DATA_R &= 0x10) || !(GPIO_PORTE_DATA_R & 0x01)){
+//						  genericdelay(100,0);
+//							 if (!(GPIO_PORTF_DATA_R &= 0x10)){
+//								 genericdelay(100,0);
+//								 LCD4bits_Cmd(0x01);
+//								 break;}
+//
+//							else	 while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
+//
+//
+//						}
+
+            LCD4bits_Data((Minutes+48));
+
+            LCD4bits_Data(':');
+
+            LCD4bits_Data(Seconds1+48);
+						LCD4bits_Data(Seconds2+48);
+
+
+            genericdelay(1000,0);
+            if(Seconds2 !=00){
+                Seconds2--;
+            }
+						if(Seconds2 ==00 && Seconds1!=0){
+						LCD4bits_Cmd(0x01);
+						LCD4bits_Data((Minutes+48));
+						LCD4bits_Data(':');
+
+						LCD4bits_Data(Seconds1+48);
+						LCD4bits_Data(Seconds2+48);
+						genericdelay(1000,0);
+						Seconds2 =9;
+						Seconds1--;
+
+						}
+            if(Seconds1==0 && Seconds2 ==0 &&Minutes !=0 ){
+                Seconds1 =5;
+								Seconds2 =9;
+                Minutes--;
+            }
+            if(Seconds1 ==0 && Seconds2 ==0 && Minutes ==0){
+
+                    break;}
+}
+}
+unsigned char keypadinput;
+//int Minutes,Seconds1,Seconds2;
+unsigned char Kilos;
+
+char caseA[] ="   PoP-Corn   ";
+char caseB[] ="Beef weight?";
+char caseC[] ="Chicken weight?";
+char error[] = "     Error";
+int i;
+
+int num1 =0 , num2 =0 ;
+int num3 =0 , num4 =0 ;
+int main(void){
+
+
+	char* str = "* Microwave * ";    //Write any string you want to display on LCD
+	LCD4bits_Init();									//Initialization of LCD
+	LCD4bits_Cmd(0x01);								//Clear the display
+	LCD4bits_Cmd(0x80);               //Force the cursor to beginning of 1st line
+	delayMs(500);											//delay 500 ms for LCD (MCU is faster than LCD)
+	LCD_WriteString(str);							//Write the string on LCD
+	delayMs(300);											//Delay 500 ms to let the LCD diplays the data
+	PortF_init();
+	PortE_init();
+	KEYPAD_INIT();
+	SysTick_Wait();
+
+	while(1){
+			delayMs(1000);
+		LCD4bits_Cmd(0x01);
+		keypadinput=KEYPAD_READ();
+	GPIO_PORTE_DATA_R |= 0x02;
+
+		switch(keypadinput){
+	case 'A': LCD_WriteString(caseA);
+	delayMs(2000);
+
+
+			while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
+			GPIO_PORTF_DATA_R |= 0x0E;
+
+
+      counter(1,'A');
+			for(i=0;i<=3;i++){
+			GPIO_PORTF_DATA_R ^= (0x0E);
+			genericdelay(500,0);
+			}
+			GPIO_PORTE_DATA_R |= 0x02;
+			GPIO_PORTF_DATA_R &= ~(0x0E);
+
+	break;
+
+			case 'B':
+				CaseBStart:
+
+				LCD_WriteString(caseB);
+              genericdelay(2000,0);
+               Kilos =KEYPAD_READ();
+
+              while(1){
+                if (isdigit(Kilos)&& Kilos!=0){
+									while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
+									GPIO_PORTF_DATA_R |= 0x0E;
+									counter((Kilos-48)*0.5,'B');
+									for(i=0;i<=3;i++){
+									GPIO_PORTF_DATA_R ^= (0x0E);
+									genericdelay(500,0);
+											}
+									GPIO_PORTE_DATA_R |= 0x02;
+									GPIO_PORTF_DATA_R &= ~(0x0E);
+                    break;
+                }
+                else LCD4bits_Cmd(0x01);
+									LCD_WriteString(error);
+                    genericdelay(2000,0);
+								LCD4bits_Cmd(0x01);
+								goto CaseBStart;
+              }
+
+
+
+	break;
