@@ -162,7 +162,7 @@ void PortE_init(void){
 			GPIO_PORTE_AFSEL_R = 0x00;
 			GPIO_PORTE_AMSEL_R = 0x00;
 			GPIO_PORTE_PCTL_R = 0;
-			GPIO_PORTE_DIR_R |= 0x08;        //button E0,Buzzer E1
+			GPIO_PORTE_DIR_R |= 0x02;        //button E0,Buzzer E1
 			GPIO_PORTE_PUR_R |= 0x01;
 }
 
@@ -243,32 +243,39 @@ unsigned char KEYPAD_READ(void){
   }
 	return 0xFF;
 }
+
+
+
+
 void counter(float time,unsigned char identifier){
-	int Minutes=0,Seconds1=0,Seconds2=0;
-	float Seconds;
-	Minutes =(int) time;
-	Seconds = time - Minutes;
-	if(identifier == 'A'){
-Seconds1 = (int)(Seconds*10);
-Seconds2 =(int) (Seconds*100 -Seconds1 *10);
-	}
-	else if(identifier == 'B' ){
-		Seconds = Seconds * 0.6;
-	Seconds1 = (int)(Seconds*10) ;
-Seconds2 =(int) (Seconds*100 -Seconds1 *10);
-
-	}else if(identifier == 'C'){
-				Seconds = Seconds * 0.6;
-	Seconds1 = (int)(Seconds*10) ;
-Seconds2 =(int) (Seconds*100 -Seconds1 *10);
-	}
 
 
-while(1){
+			int Minutes=0,Seconds1=0,Seconds2=0;
+			float Seconds;
+			Minutes =(int) time;
+			Seconds = time - Minutes;
+			if(identifier == 'A'){
+			Seconds1 = (int)(Seconds*10);
+			Seconds2 =(int) (Seconds*100 -Seconds1 *10);
+			}
+			else if(identifier == 'B' ){
+			Seconds = Seconds * 0.6;
+			Seconds1 = (int)(Seconds*10) ;
+			Seconds2 =(int) (Seconds*100 -Seconds1 *10);
+
+			}else if(identifier == 'C'){
+			Seconds = Seconds * 0.6;
+			Seconds1 = (int)(Seconds*10) ;
+			Seconds2 =(int) (Seconds*100 -Seconds1 *10);
+			}
+
+
+			while(1){
 
 
 		         if (!(GPIO_PORTF_DATA_R & 0x10)|| !(GPIO_PORTE_DATA_R & 0x01)) {
-						   genericdelay(1000,0);
+	    				 LCD_WriteString("   'Paused'");
+							 genericdelay(1000,0);
 							 while(((GPIO_PORTF_DATA_R & 0x10))  &&((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01)));
 							 if(!(GPIO_PORTF_DATA_R & 0x10)){
 							 goto stop;
@@ -313,7 +320,11 @@ while(1){
             }
             if(Seconds1 ==0 && Seconds2 ==0 && Minutes ==0){
 							stop:
-                    break;}
+							LCD4bits_Cmd(0x01);
+							LCD_WriteString("  Bon Appetit");
+							genericdelay(1000,0);
+              break;
+						}
 }
 }
 
@@ -323,7 +334,8 @@ void Dcounter(int num1,int num2,int num3,int num4){
 
           while(1){
 						   if (!(GPIO_PORTF_DATA_R & 0x10)|| !(GPIO_PORTE_DATA_R & 0x01)) {
-						   genericdelay(1000,0);
+							 LCD_WriteString("   'Paused'");
+							 genericdelay(1000,0);
 							 while(((GPIO_PORTF_DATA_R & 0x10))  &&((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01)));
 							 if(!(GPIO_PORTF_DATA_R & 0x10)){
 							 goto end;
@@ -387,8 +399,11 @@ void Dcounter(int num1,int num2,int num3,int num4){
 
 						}
             if(num3 ==0 && num4 ==0 && num2 ==0 && num1 ==0){
-
-							end:	break;}
+							end:
+							LCD4bits_Cmd(0x01);
+							LCD_WriteString("  Bon Appetit");
+							genericdelay(1000,0);
+						break;}
 
 
 
@@ -433,9 +448,9 @@ int main(void){
 
 	while(1){
 
-
+			//GPIO_PORTF_DATA_R |= (0x02);
 			LCD4bits_Cmd(0x80);
-			delayMs(500);
+			delayMs(300);
 			LCD_WriteString(str2);
 			keypadinput=KEYPAD_READ();
 																									//GPIO_PORTE_DATA_R |= 0x02;
@@ -455,8 +470,9 @@ int main(void){
 
 				counter(1,'A');
 
-				for(i=0;i<=3;i++){
+				for(i=0;i<=4;i++){
 				GPIO_PORTF_DATA_R ^= (0x0E);
+				GPIO_PORTE_DATA_R ^= 0x02;
 				genericdelay(500,0);
 				}
 
@@ -485,11 +501,12 @@ int main(void){
 						while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
 						GPIO_PORTF_DATA_R |= 0x0E;
 						counter((Kilos-48)*0.5,'B');
-						for(i=0;i<=3;i++){
+						for(i=0;i<=4;i++){
 								GPIO_PORTF_DATA_R ^= (0x0E);
+								GPIO_PORTE_DATA_R ^= 0x02;
 								genericdelay(500,0);
 						}
-					//	GPIO_PORTE_DATA_R |= 0x02;
+						GPIO_PORTE_DATA_R |= 0x02;
 						GPIO_PORTF_DATA_R &= ~(0x0E);
             break;
                 }
@@ -521,8 +538,9 @@ int main(void){
 							while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
 							GPIO_PORTF_DATA_R |= 0x0E;
 							counter((Kilos-48)*0.2,'C');
-							for(i=0;i<=3;i++){
+							for(i=0;i<=4;i++){
 								GPIO_PORTF_DATA_R ^= (0x0E);
+								GPIO_PORTE_DATA_R ^= 0x02;
 								genericdelay(500,0);
 								}
 							GPIO_PORTE_DATA_R |= 0x02;
@@ -555,7 +573,7 @@ int main(void){
 				goto cookingtime;
 				}
 				LCD4bits_Cmd(clear_display);												//to indicate the cooking time required in minutes and seconds.*/
-				genericdelay(500, 0);
+				genericdelay(200, 0);
 				LCD_WriteString("--:-");
 				LCD4bits_Data(num1);
 
@@ -567,7 +585,7 @@ int main(void){
 				goto cookingtime;
 				}
 				LCD4bits_Cmd(clear_display);
-				genericdelay(500, 0);
+				genericdelay(200, 0);
 				LCD_WriteString("--:");
 				LCD4bits_Data(num1);
 				LCD4bits_Data(num2);
@@ -581,7 +599,7 @@ int main(void){
 				goto cookingtime;
 				}
 				LCD4bits_Cmd(clear_display);
-				genericdelay(500, 0);
+				genericdelay(200, 0);
 				LCD4bits_Data('-');
 				LCD4bits_Data(num1);
 				LCD4bits_Data(':');
@@ -598,7 +616,7 @@ int main(void){
 				goto cookingtime;
 				}
 				LCD4bits_Cmd(clear_display);
-				genericdelay(500, 0);
+				genericdelay(200, 0);
 				LCD4bits_Data(num1);
 				LCD4bits_Data(num2);
 				LCD4bits_Data(':');
@@ -612,11 +630,14 @@ int main(void){
 				while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
 				GPIO_PORTF_DATA_R |= 0x0E;
 				Dcounter(num1-48,num2-48,num3-48,num4-48);
-				for(i=0;i<=3;i++){
+				for(i=0;i<=4;i++){
 						GPIO_PORTF_DATA_R ^= (0x0E);
+  					GPIO_PORTE_DATA_R ^= 0x02;
 						genericdelay(500,0);
 						}
 				GPIO_PORTF_DATA_R &= ~(0x0E);
+				GPIO_PORTE_DATA_R |= 0x02;
+
 				LCD4bits_Cmd(0x01);
 			 break;
 
