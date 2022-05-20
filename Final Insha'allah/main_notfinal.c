@@ -162,8 +162,8 @@ void PortE_init(void){
 			GPIO_PORTE_AFSEL_R = 0x00;
 			GPIO_PORTE_AMSEL_R = 0x00;
 			GPIO_PORTE_PCTL_R = 0;
-			GPIO_PORTE_DIR_R |= 0x02;        //button E0,Buzzer E1
-			//GPIO_PORTE_PUR_R |= 0x01;
+			GPIO_PORTE_DIR_R |= 0x08;        //button E0,Buzzer E1
+			GPIO_PORTE_PUR_R |= 0x01;
 }
 
 void SysTick_Wait(void){
@@ -266,18 +266,21 @@ Seconds2 =(int) (Seconds*100 -Seconds1 *10);
 
 while(1){
 
-LCD4bits_Cmd(0x01);
-//            if (!(GPIO_PORTF_DATA_R &= 0x10) || !(GPIO_PORTE_DATA_R & 0x01)){
-//						  genericdelay(100,0);
-//							 if (!(GPIO_PORTF_DATA_R &= 0x10)){
-//								 genericdelay(100,0);
-//								 LCD4bits_Cmd(0x01);
-//								 break;}
-//
-//							else	 while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
-//
-//
-//						}
+
+		         if (!(GPIO_PORTF_DATA_R & 0x10)|| !(GPIO_PORTE_DATA_R & 0x01)) {
+						   genericdelay(1000,0);
+							 while(((GPIO_PORTF_DATA_R & 0x10))  &&((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01)));
+							 if(!(GPIO_PORTF_DATA_R & 0x10)){
+							 goto stop;
+
+							 }
+							 else if((!(GPIO_PORTF_DATA_R & 0x01) )){
+							 //|| !(GPIO_PORTE_DATA_R & 0x01))){
+							 continue;
+							 }
+						 }
+						LCD4bits_Cmd(0x01);
+
 
             LCD4bits_Data((Minutes+48));
 
@@ -309,89 +312,315 @@ LCD4bits_Cmd(0x01);
                 Minutes--;
             }
             if(Seconds1 ==0 && Seconds2 ==0 && Minutes ==0){
-
+							stop:
                     break;}
 }
 }
+
+
+void Dcounter(int num1,int num2,int num3,int num4){
+
+
+          while(1){
+						   if (!(GPIO_PORTF_DATA_R & 0x10)|| !(GPIO_PORTE_DATA_R & 0x01)) {
+						   genericdelay(1000,0);
+							 while(((GPIO_PORTF_DATA_R & 0x10))  &&((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01)));
+							 if(!(GPIO_PORTF_DATA_R & 0x10)){
+							 goto end;
+
+							 }
+							 else if((!(GPIO_PORTF_DATA_R & 0x01) )){
+							 //|| !(GPIO_PORTE_DATA_R & 0x01))){
+							 continue;
+							 }
+						 }
+
+
+
+						LCD4bits_Cmd(0x01);
+						LCD4bits_Data((num1+48));
+						LCD4bits_Data((num2+48));
+            LCD4bits_Data(':');
+            LCD4bits_Data(num3+48);
+						LCD4bits_Data(num4+48);
+            genericdelay(1000,0);
+
+						if(num4 !=0){
+                num4--;
+            }
+						if(num4 == 0 && num3 != 0){
+						LCD4bits_Cmd(0x01);
+						LCD4bits_Data((num1+48));
+						LCD4bits_Data((num2+48));
+						LCD4bits_Data(':');
+						LCD4bits_Data(num3+48);
+						LCD4bits_Data(num4+48);
+						genericdelay(1000,0);
+						num4 =9;
+						num3--;
+
+						}
+            if(num4==0 && num3 ==0 && num2 !=0 ){
+                LCD4bits_Cmd(0x01);
+								LCD4bits_Data((num1+48));
+								LCD4bits_Data((num2+48));
+								LCD4bits_Data(':');
+								LCD4bits_Data(num3+48);
+								LCD4bits_Data(num4+48);
+								genericdelay(1000,0);
+								num3 =5;
+								num4 =9;
+                num2--;
+            }
+						if(num4==0 && num3 ==0 && num2 ==0 && num1 !=0){
+								LCD4bits_Cmd(0x01);
+								LCD4bits_Data((num1+48));
+								LCD4bits_Data((num2+48));
+								LCD4bits_Data(':');
+								LCD4bits_Data(num3+48);
+								LCD4bits_Data(num4+48);
+								genericdelay(1000,0);
+								num2=9;
+								num3=5;
+								num4=9;
+								num1--;
+
+						}
+            if(num3 ==0 && num4 ==0 && num2 ==0 && num1 ==0){
+
+							end:	break;}
+
+
+
+
+
+}
+}
+
+
+
+
 unsigned char keypadinput;
 //int Minutes,Seconds1,Seconds2;
 unsigned char Kilos;
 
-char caseA[] ="   PoP-Corn   ";
-char caseB[] ="Beef weight?";
+char caseA[] ="    PoP-Corn   ";
+char caseB[] ="  Beef weight?";
 char caseC[] ="Chicken weight?";
-char error[] = "     Error";
+char error[] = "     Error  ";
+char* str2 = " Press any key ";
 int i;
 
 int num1 =0 , num2 =0 ;
 int num3 =0 , num4 =0 ;
+
 int main(void){
 
 
-	char* str = "* Microwave * ";    //Write any string you want to display on LCD
+	char* str = "** Microwave ** ";    //Write any string you want to display on LCD
 	LCD4bits_Init();									//Initialization of LCD
 	LCD4bits_Cmd(0x01);								//Clear the display
 	LCD4bits_Cmd(0x80);               //Force the cursor to beginning of 1st line
 	delayMs(500);											//delay 500 ms for LCD (MCU is faster than LCD)
 	LCD_WriteString(str);							//Write the string on LCD
-	delayMs(300);											//Delay 500 ms to let the LCD diplays the data
+	delayMs(1000);											//Delay 500 ms to let the LCD diplays the data
+	LCD4bits_Cmd(0x01);								//Clear the display
+
 	PortF_init();
 	PortE_init();
 	KEYPAD_INIT();
 	SysTick_Wait();
 
 	while(1){
-			delayMs(1000);
-		LCD4bits_Cmd(0x01);
-		keypadinput=KEYPAD_READ();
-	GPIO_PORTE_DATA_R |= 0x02;
+
+
+			LCD4bits_Cmd(0x80);
+			delayMs(500);
+			LCD_WriteString(str2);
+			keypadinput=KEYPAD_READ();
+																									//GPIO_PORTE_DATA_R |= 0x02;
 
 		switch(keypadinput){
-	case 'A': LCD_WriteString(caseA);
-	delayMs(2000);
+
+			case 'A':
+
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString(caseA);
+				delayMs(500);
 
 
-			while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
-			GPIO_PORTF_DATA_R |= 0x0E;
+				while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
 
+				GPIO_PORTF_DATA_R |= 0x0E;
 
-      counter(1,'A');
-			for(i=0;i<=3;i++){
-			GPIO_PORTF_DATA_R ^= (0x0E);
-			genericdelay(500,0);
-			}
-			GPIO_PORTE_DATA_R |= 0x02;
-			GPIO_PORTF_DATA_R &= ~(0x0E);
+				counter(1,'A');
 
-	break;
+				for(i=0;i<=3;i++){
+				GPIO_PORTF_DATA_R ^= (0x0E);
+				genericdelay(500,0);
+				}
+
+				GPIO_PORTE_DATA_R |= 0x02;
+				GPIO_PORTF_DATA_R &= ~(0x0E);
+				LCD4bits_Cmd(0x01);
+
+			break;
 
 			case 'B':
+
 				CaseBStart:
-
+				LCD4bits_Cmd(0x01);
 				LCD_WriteString(caseB);
-              genericdelay(2000,0);
-               Kilos =KEYPAD_READ();
+        genericdelay(1000,0);
+        Kilos =KEYPAD_READ();
 
-              while(1){
-                if (isdigit(Kilos)&& Kilos!=0){
-									while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
-									GPIO_PORTF_DATA_R |= 0x0E;
-									counter((Kilos-48)*0.5,'B');
-									for(i=0;i<=3;i++){
-									GPIO_PORTF_DATA_R ^= (0x0E);
-									genericdelay(500,0);
-											}
-									GPIO_PORTE_DATA_R |= 0x02;
-									GPIO_PORTF_DATA_R &= ~(0x0E);
-                    break;
+
+        while(1){
+
+					if (isdigit(Kilos)&& Kilos!='0'){
+						LCD4bits_Cmd(0x01);
+						LCD4bits_Data(Kilos);
+						LCD_WriteString(" Kg");
+						genericdelay(2000,0);
+						while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
+						GPIO_PORTF_DATA_R |= 0x0E;
+						counter((Kilos-48)*0.5,'B');
+						for(i=0;i<=3;i++){
+								GPIO_PORTF_DATA_R ^= (0x0E);
+								genericdelay(500,0);
+						}
+					//	GPIO_PORTE_DATA_R |= 0x02;
+						GPIO_PORTF_DATA_R &= ~(0x0E);
+            break;
                 }
-                else LCD4bits_Cmd(0x01);
-									LCD_WriteString(error);
-                    genericdelay(2000,0);
+            else LCD4bits_Cmd(0x01);
+								LCD_WriteString(error);
+                genericdelay(1500,0);
 								LCD4bits_Cmd(0x01);
 								goto CaseBStart;
               }
+			 break;
+
+
+				case 'C':
+
+					CaseCStart:
+					LCD4bits_Cmd(0x01);
+					LCD_WriteString(caseC);
+          genericdelay(1000,0);
+          Kilos =KEYPAD_READ();
+
+
+          while(1){
+
+             if (isdigit(Kilos)&& Kilos!='0'){
+						  LCD4bits_Cmd(0x01);
+							LCD4bits_Data(Kilos);
+							LCD_WriteString(" Kg");
+							genericdelay(2000,0);
+							while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
+							GPIO_PORTF_DATA_R |= 0x0E;
+							counter((Kilos-48)*0.2,'C');
+							for(i=0;i<=3;i++){
+								GPIO_PORTF_DATA_R ^= (0x0E);
+								genericdelay(500,0);
+								}
+							GPIO_PORTE_DATA_R |= 0x02;
+							GPIO_PORTF_DATA_R &= ~(0x0E);
+             break;
+              }
+              else LCD4bits_Cmd(0x01);
+									LCD_WriteString(error);
+                  genericdelay(1500,0);
+									LCD4bits_Cmd(0x01);
+									goto CaseCStart;
+              }
+					 LCD4bits_Cmd(0x01);
+					 break;
 
 
 
-	break;
+			case  'D':      /*If D is pushed on the keypad, the words “Cooking Time?” should appear on the LCD.*/
+
+			  cookingtime:
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString(" Cooking Time?");
+				genericdelay(1000, 0);
+
+				num1= KEYPAD_READ();                                //After that the user can enter a value between 1 and 30
+				if (num1 >= '3' || num1<'0') {
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString("   Not valid");
+				genericdelay(1000, 0);
+				goto cookingtime;
+				}
+				LCD4bits_Cmd(clear_display);												//to indicate the cooking time required in minutes and seconds.*/
+				genericdelay(500, 0);
+				LCD_WriteString("--:-");
+				LCD4bits_Data(num1);
+
+				num2= KEYPAD_READ();
+				if (!(isdigit(num2)) ) {
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString("   Not valid");
+				genericdelay(1000, 0);
+				goto cookingtime;
+				}
+				LCD4bits_Cmd(clear_display);
+				genericdelay(500, 0);
+				LCD_WriteString("--:");
+				LCD4bits_Data(num1);
+				LCD4bits_Data(num2);
+
+
+				num3= KEYPAD_READ();
+				if (!(isdigit(num3)) || num3 > '5' ) {
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString("   Not valid");
+				genericdelay(1000, 0);
+				goto cookingtime;
+				}
+				LCD4bits_Cmd(clear_display);
+				genericdelay(500, 0);
+				LCD4bits_Data('-');
+				LCD4bits_Data(num1);
+				LCD4bits_Data(':');
+				LCD4bits_Data(num2);
+				LCD4bits_Data(num3);
+
+
+
+				num4= KEYPAD_READ();
+				if (!(isdigit(num4))) {
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString("   Not valid");
+				genericdelay(1000, 0);
+				goto cookingtime;
+				}
+				LCD4bits_Cmd(clear_display);
+				genericdelay(500, 0);
+				LCD4bits_Data(num1);
+				LCD4bits_Data(num2);
+				LCD4bits_Data(':');
+				LCD4bits_Data(num3);
+				LCD4bits_Data(num4);
+				genericdelay(1000, 0);
+
+
+
+
+				while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
+				GPIO_PORTF_DATA_R |= 0x0E;
+				Dcounter(num1-48,num2-48,num3-48,num4-48);
+				for(i=0;i<=3;i++){
+						GPIO_PORTF_DATA_R ^= (0x0E);
+						genericdelay(500,0);
+						}
+				GPIO_PORTF_DATA_R &= ~(0x0E);
+				LCD4bits_Cmd(0x01);
+			 break;
+
+
+}
+}
+}
