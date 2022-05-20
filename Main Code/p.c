@@ -202,9 +202,90 @@ switch(keypadinput){
 
                     break;}
 
-	}break;
+			case  'D':      /*If D is pushed on the keypad, the words “Cooking Time?” should appear on the LCD.*/
+
+			    cookingtime:
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString(" Cooking Time?");
+				genericdelay(1000, 0);
+
+				num1= KEYPAD_READ();             /*After that the user can enter a value between 1 and 30 */
+				if (num1 >= '3' || num1<'0') {
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString("   Not valid");
+				genericdelay(1000, 0);
+				goto cookingtime;
+				}
+				LCD4bits_Cmd(clear_display);	/*to indicate the cooking time required in minutes and seconds.*/
+				genericdelay(500, 0);
+				LCD_WriteString("--:-");
+				LCD4bits_Data(num1);
+
+				num2= KEYPAD_READ();
+				if (!(isdigit(num2)) ) {
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString("   Not valid");
+				genericdelay(1000, 0);
+				goto cookingtime;
+				}
+				LCD4bits_Cmd(clear_display);
+				genericdelay(500, 0);
+				LCD_WriteString("--:");
+				LCD4bits_Data(num1);
+				LCD4bits_Data(num2);
 
 
+				num3= KEYPAD_READ();
+				if (!(isdigit(num3)) || num3 > '5' ) {
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString("   Not valid");
+				genericdelay(1000, 0);
+				goto cookingtime;
+				}
+				LCD4bits_Cmd(clear_display);
+				genericdelay(500, 0);
+				LCD4bits_Data('-');
+				LCD4bits_Data(num1);
+				LCD4bits_Data(':');
+				LCD4bits_Data(num2);
+				LCD4bits_Data(num3);
+
+
+
+				num4= KEYPAD_READ();
+				if (!(isdigit(num4))) {
+				LCD4bits_Cmd(0x01);
+				LCD_WriteString("   Not valid");
+				genericdelay(1000, 0);
+				goto cookingtime;
+				}
+				LCD4bits_Cmd(clear_display);
+				genericdelay(500, 0);
+				LCD4bits_Data(num1);
+				LCD4bits_Data(num2);
+				LCD4bits_Data(':');
+				LCD4bits_Data(num3);
+				LCD4bits_Data(num4);
+				genericdelay(1000, 0);
+
+
+
+
+				while((GPIO_PORTF_DATA_R & 0x01) || !(GPIO_PORTE_DATA_R & 0x01));
+				GPIO_PORTF_DATA_R |= 0x0E;
+				Dcounter(num1-48,num2-48,num3-48,num4-48);
+				for(i=0;i<=3;i++){
+						GPIO_PORTF_DATA_R ^= (0x0E);
+						genericdelay(500,0);
+						}
+				GPIO_PORTF_DATA_R &= ~(0x0E);
+				LCD4bits_Cmd(0x01);
+			 break;
+
+
+}
+}
+}
 
 
 
@@ -213,5 +294,4 @@ switch(keypadinput){
 
 }
 
-}
-}
+
