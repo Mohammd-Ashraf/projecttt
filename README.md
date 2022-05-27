@@ -1,5 +1,4 @@
-# Embedded Project
-(Microwave Oven Controller Project)
+# Embedded Project (Microwave Oven Controller Project)
 ===============================================================
 
 
