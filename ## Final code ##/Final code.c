@@ -40,7 +40,7 @@ void LCD4bits_Init(void)
 	delayMs(10);                 //delay 10 ms for enable the clock of PORTB
   LCD->DIR = 0xFF;             //let PORTB as output pins
 	LCD->DEN = 0xFF;             //enable PORTB digital IO pins
-	LCD4bits_Cmd(0x28);          //2 lines and 5x7 character (4-bit data, D4 to D7)
+	LCD4bits_Cmd(0x28);          //2 lines and 5x7 character (4-bit data, B4 to B7)
 	LCD4bits_Cmd(0x06);          //Automatic Increment cursor (shift cursor to right)
 	LCD4bits_Cmd(0x01);					 //Clear display screen
 	LCD4bits_Cmd(0x0C);          //Display on, cursor blinking
@@ -558,7 +558,7 @@ int main(void){
 
 
 
-			case  'D':      /*If D is pushed on the keypad, the words “Cooking Time?” should appear on the LCD.*/
+			case  'D':      /*If D is pushed on the keypad, the words Â“Cooking Time?Â” should appear on the LCD.*/
 
 			  cookingtime:
 				LCD4bits_Cmd(0x01);
